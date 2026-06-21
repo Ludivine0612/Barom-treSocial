@@ -89,9 +89,21 @@ function initializeSectors() {
 }
 
 // --- RÉCUPÉRATION DES DONNÉES EN LIGNE (SUPABASE) ---
+// --- RÉCUPÉRATION DES DONNÉES EN LIGNE (UNIQUEMENT LA SEMAINE EN COURS) ---
 async function fetchDataFromSupabase() {
     try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/remontees?select=*`, {
+        const now = new Date();
+        const day = now.getDay();
+        // Calcul du lundi de la semaine en cours
+        const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+        const monday = new Date(now.setDate(diff));
+        monday.setHours(0, 0, 0, 0);
+        
+        // Format YYYY-MM-DD exigé par Supabase
+        const mondayISO = monday.toISOString().split('T')[0];
+
+        // On demande à Supabase uniquement les lignes créées depuis ce lundi
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/remontees?date=gte.${mondayISO}&select=*`, {
             method: "GET",
             headers: {
                 "apikey": SUPABASE_ANON_KEY,
@@ -359,15 +371,60 @@ async function executeDeleteInSupabase(id) {
 }
 
 // --- EXPORTATION DES ARCHIVES ---
-window.exportArchives = function() {
-    if (socialData.length === 0) { alert("Aucune donnée en ligne à exporter."); return; }
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(socialData, null, 4));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `Barometre_Airbus_Live_Export.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
+// --- EXPORTATION DE L'INTÉGRALITÉ DES ARCHIVES (TOUTES LES SEMAINES) ---
+window.exportArchives = async function() {
+    // 1. Feedback visuel sur le bouton pendant le chargement
+    const archiveBtn = document.querySelector("button[onclick='exportArchives()']");
+    const originalText = archiveBtn ? archiveBtn.innerHTML : "📁 Accéder aux Archives (.json)";
+    
+    if (archiveBtn) {
+        archiveBtn.innerHTML = "⏳ Téléchargement de tout l'historique...";
+        archiveBtn.style.opacity = "0.7";
+        archiveBtn.style.pointerEvents = "none";
+    }
+
+    try {
+        // 2. Requête spécifique pour récupérer TOUTES les lignes sans filtre de date
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/remontees?select=*`, {
+            method: "GET",
+            headers: {
+                "apikey": SUPABASE_ANON_KEY,
+                "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+            }
+        });
+
+        if (!response.ok) throw new Error("Impossible de récupérer les archives globales.");
+
+        const allData = await response.json();
+
+        if (allData.length === 0) { 
+            alert("Aucune donnée globale en ligne à exporter."); 
+            return; 
+        }
+
+        // 3. Génération du fichier JSON complet
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allData, null, 4));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        
+        // Optionnel : On ajoute la date du jour dans le nom du fichier pour s'y retrouver
+        const todayFile = new Date().toISOString().split('T')[0];
+        downloadAnchor.setAttribute("download", `Barometre_Airbus_Global_Backup_${todayFile}.json`);
+        
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+
+    } catch (error) {
+        alert("Erreur lors de l'exportation globale : " + error.message);
+    } finally {
+        // 4. Restauration du bouton après l'export
+        if (archiveBtn) {
+            archiveBtn.innerHTML = originalText;
+            archiveBtn.style.opacity = "1";
+            archiveBtn.style.pointerEvents = "auto";
+        }
+    }
 };
 
 // --- CHARGEMENT ET BRANCHEMENT DES ÉVÉNEMENTS COMPOSANTS ---
