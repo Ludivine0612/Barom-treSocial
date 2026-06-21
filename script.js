@@ -1,17 +1,51 @@
 // --- BASE DE CONNAISSANCES DES HRBP AIRBUS HELICOPTERS (VERSION EXHAUSTIVE 2026) ---
+// --- BASE DE CONNAISSANCES DES HRBP AIRBUS HELICOPTERS (MIS À JOUR JUIN 2026) ---
 const hrbpMapping = {
-    // === GROUPE ED : PRODUCTION, SUPPLY CHAIN, FALS & PROTOTYPES ===
+    // === GROUPE ED : PRODUCTION, SUPPLY CHAIN, FALS & PROTOTYPES (100% CONFORME SAP) ===
     "FAL & Prototypes (Général)": { name: "Francis OTTAVIANI", siglum: "EHFM", group: "ED" },
     "FAL H160 / H175 & Production Flow": { name: "Francis OTTAVIANI", siglum: "EHFM", group: "ED" },
-    "FAL H125 / H130 & Dolphin": { name: "Julie VIDAL", siglum: "EHFM", group: "ED" },
+    "EC175 Final Assembly Line": { name: "Francis OTTAVIANI", siglum: "EHFM", group: "ED" },
+    "Prototype Production & Flight Line": { name: "Francis OTTAVIANI", siglum: "EHFM", group: "ED" },
+    
+    "FAL H125 H130 & Dauphin": { name: "Julie VIDAL", siglum: "EHFM", group: "ED" },
     "Global Supply Chain & Operations": { name: "Julie VIDAL", siglum: "EHFM", group: "ED" },
-    "Procurement & Strategic Sourcing (EDP)": { name: "ASTRID ECUYER", siglum: "EHFM", group: "ED" },
+    "Assembly Line Light H/C": { name: "Julie VIDAL", siglum: "EHFM", group: "ED" },
+    
+    "Procurement & Strategic Sourcing (EDP)": { name: "Astrid ECUYER", siglum: "EHFM", group: "ED" },
+    "Strategic Procurement & Buying Perf": { name: "Astrid ECUYER", siglum: "EHFM", group: "ED" },
+    "Logistics Engineering & Operations": { name: "Astrid ECUYER", siglum: "EHFM", group: "ED" },
+    
     "Center of Excellence Dynamics & Assy (EDC)": { name: "Fabien ALBERTI", siglum: "EHD", group: "ED" },
+    
     "Manufacturing Gears & Special Treatments": { name: "Arnaud GOURMAND", siglum: "EHFM", group: "ED" },
-    "Industrial Means & Tooling (EDCO)": { name: "Caroline FERRI", siglum: "EHFM", group: "ED" },
+    "Rotors & Carters Production Teams": { name: "Arnaud GOURMAND", siglum: "EHFM", group: "ED" },
+    "Blue Collar Competencies & Skills": { name: "Arnaud GOURMAND", siglum: "EHFM", group: "ED" },
+    
+    "Industrial Means & Facilities (EDCO)": { name: "Caroline FERRI", siglum: "EHFM", group: "ED" },
+    "Composite & Sheet Metal Manufacturing": { name: "Caroline FERRI", siglum: "EHFM", group: "ED" },
+    "E-Systems Workshop & Customer Services": { name: "Caroline FERRI", siglum: "EHFM", group: "ED" },
+    
     "Industrialization Business Methods (EDISP)": { name: "Celine DI FILIPPO", siglum: "EHFM", group: "ED" },
+    "Industry Production Flows & Strategy": { name: "Celine DI FILIPPO", siglum: "EHFM", group: "ED" },
+    "Final Painting & Interiors Operations": { name: "Celine DI FILIPPO", siglum: "EHFM", group: "ED" },
+    
     "QASS & Conformity Plant Meca / Rotor (EDQMD)": { name: "Aurelie NICOLAS", siglum: "EHFM", group: "ED" },
+    "Inspection & Conformity Electrical / Quality": { name: "Aurelie NICOLAS", siglum: "EHFM", group: "ED" },
+    
     "Airplane Door Inspection & Confi (EDQDD)": { name: "Mathilde CAMELIERE", siglum: "EHD", group: "ED" },
+    "Aviation Safety & Quality Industry / structure": { name: "Mathilde CAMELIERE", siglum: "EHD", group: "ED" },
+
+    "System Test & Ground Tests (Military/Civil)": { name: "Muriel LINGUINOU", siglum: "EHFM", group: "ED" },
+    "FAL Production Super Puma & Flight Line": { name: "Muriel LINGUINOU", siglum: "EHFM", group: "ED" },
+    "Assembly Line 2 & 3 Super Puma": { name: "Muriel LINGUINOU", siglum: "EHFM", group: "ED" },
+
+    "AET SP & Manufacturing Config Management": { name: "Frederique MANARIN", siglum: "EHFM", group: "ED" },
+    "Engineering Light H/C & Falcon Line H125/130": { name: "Frederique MANARIN", siglum: "EHFM", group: "ED" },
+    "Tiger Prep, Support & QLS Assembly lines": { name: "Frederique MANARIN", siglum: "EHFM", group: "ED" },
+
+    "Bench Maintenance & Component Assembly": { name: "Sacha GUILLEMOT", siglum: "EHFM", group: "ED" },
+    "Dynamic components & Mechanical Repair (DCR)": { name: "Sacha GUILLEMOT", siglum: "EHFM", group: "ED" },
+    "A350 Structure Assembly & Industrialization": { name: "Sacha GUILLEMOT", siglum: "EHFM", group: "ED" },
 
     // === GROUPE ET : ENGINEERING, TESTING & RETEX ===
     "Engineering & Integration (ETI)": { name: "Pauline DAOUD", siglum: "EHFM", group: "ET" },
@@ -40,12 +74,12 @@ const hrbpMapping = {
     "Strategy, Legal, Comms & Export Control": { name: "Thomas ASTIER", siglum: "EHF", group: "Corporate" },
     "Global Business & Commercial Policy (EB)": { name: "Marc SALADINO", siglum: "EHFM", group: "Corporate" },
     "Market Operations & Marketing (EBD)": { name: "Jean Baptiste BILLIARD", siglum: "EHB", group: "Corporate" },
-    "Facility Management & Real Estate (HMFC)": { name: "Celine FRAIZ", siglum: "EHFM", group: "Corporate" },
+    "Ecosystem & Operational Site Management": { name: "Celine FRAIZ", siglum: "EHFM", group: "ED" },
 
     // === COHORTES / PROGRAMMES SPÉCIFIQUES ===
     "Programmes: NH90 (EXN)": { name: "Emily GIBBS", siglum: "EHFM", group: "Corporate" },
     "Programmes: Tiger & VSR700 / H160 / H175": { name: "Melissa OGER", siglum: "EHFM", group: "Corporate" },
-    "Programmes: H160 Product & Customization": { name: "Marine MUNDSCHAU", siglum: "EHD", group: "Corporate" }
+    "Programmes: H160 Product & Customization": { name: "Marine MUNDSCHAU", siglum: "EHD", group: "ED" }
 };
 
 // --- COORDONNÉES DE CONNEXION SUPABASE ---
@@ -489,3 +523,119 @@ if (document.readyState === "complete" || document.readyState === "interactive")
 }
 
 setInterval(fetchDataFromSupabase, 30000);
+
+// --- EXTRACTION ET GÉNÉRATION DU RAPPORT RH DE LA SEMAINE ---
+// --- EXTRACTION ET GÉNÉRATION DU RAPPORT RH DE LA SEMAINE ---
+// --- EXTRACTION ET GÉNÉRATION DU RAPPORT RH DE LA SEMAINE ---
+window.genererRapportSemaine = function() {
+    if (socialData.length === 0) {
+        alert("Aucune donnée disponible cette semaine pour générer un rapport.");
+        return;
+    }
+
+    // 1. Calculs des indicateurs de volume
+    const totalSignaux = socialData.length;
+    const critiques = socialData.filter(s => s.rating === '1');
+    const tensions = socialData.filter(s => s.rating === '2');
+    const stables = socialData.filter(s => s.rating === '3');
+    const positifs = socialData.filter(s => s.rating === '4');
+
+    // 2. CALCUL DE LA NOTE GLOBALE DU SITE
+    const sommeNotes = socialData.reduce((acc, s) => acc + parseFloat(s.rating), 0);
+    const noteGlobale = (sommeNotes / totalSignaux).toFixed(1);
+
+    // Détermination de la couleur du score du site
+    let couleurScore = "#10B981"; // Vert par défaut (> 3.0)
+    if (noteGlobale <= 2.0) {
+        couleurScore = "#EF4444"; // Rouge si critique (<= 2.0)
+    } else if (noteGlobale <= 3.0) {
+        couleurScore = "#F59E0B"; // Orange si Warning (2.1 à 3.0)
+    }
+
+    // 3. Génération automatique de l'analyse terrain en 2-3 lignes
+    let ratioAlertes = ((critiques.length + tensions.length) / totalSignaux * 100).toFixed(0);
+    let alerteTexte = critiques.length > 0 ? "avec des points de blocage qui nécessitent une attention particulière" : "avec des tensions mineures à surveiller";
+    
+    let analyseTerrain = `Le climat social de cette semaine affiche une note globale de ${noteGlobale}/4. Il est marqué par un taux d'alerte de ${ratioAlertes}% sur l'ensemble des secteurs cartographiés, ${alerteTexte}. 
+        Une vigilance est recommandée sur les secteurs en alerte rouge afin de prévenir une dégradation du climat social.`;
+
+    // 4. Construction du contenu du rapport HTML
+    let structureRapport = `
+        <html>
+        <head>
+            <title>Synthèse Hebdomadaire - Baromètre Social Airbus</title>
+            <style>
+                body { font-family: 'Inter', sans-serif; color: #0F172A; padding: 40px; background: #FFF; line-height: 1.5; }
+                .header { border-bottom: 3px solid #002244; padding-bottom: 20px; margin-bottom: 30px; }
+                h1 { color: #002244; margin: 0; font-size: 24px; }
+                .meta { color: #475569; font-size: 14px; margin-top: 5px; }
+                .kpi-container { display: flex; gap: 20px; margin-bottom: 30px; }
+                .kpi-card { flex: 1; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; text-align: center; }
+                .kpi-title { font-size: 11px; text-transform: uppercase; font-weight: bold; color: #64748B; letter-spacing: 0.05em; }
+                .kpi-value { font-size: 22px; font-weight: bold; margin-top: 5px; }
+                .section { margin-bottom: 35px; }
+                .section-title { font-size: 15px; font-weight: bold; color: #002244; border-left: 4px solid #002244; padding-left: 10px; margin-bottom: 15px; text-transform: uppercase; }
+                .analyse-box { background: #F8FAFC; border: 1px dashed #CBD5E1; padding: 20px; border-radius: 12px; font-size: 14px; color: #334155; font-style: italic; }
+                .signal-item { padding: 12px; border-bottom: 1px solid #F1F5F9; font-size: 14px; }
+                .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+                .badge-1 { background: #FEF2F2; color: #EF4444; }
+                .badge-2 { background: #FFFBEB; color: #D97706; }
+                .badge-4 { background: #ECFDF5; color: #10B981; }
+                @media print { .no-print { display: none; } }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>Baromètre Social - Synthèse Hebdomadaire</h1>
+                <div class="meta">Généré le ${new Date().toLocaleDateString('fr-FR')} • Espace Digital HRBP</div>
+            </div>
+
+            <div class="kpi-container">
+                <div class="kpi-card" style="border-top: 4px solid ${couleurScore};">
+                    <div class="kpi-title">Moyenne Globale Site</div>
+                    <div class="kpi-value" style="color: ${couleurScore}; font-size: 28px;">${noteGlobale} / 4</div>
+                </div>
+                <div class="kpi-card"><div class="kpi-title">Total Implémentations</div><div class="kpi-value">${totalSignaux}</div></div>
+                <div class="kpi-card" style="border-color: #EF4444;"><div class="kpi-title" style="color: #EF4444;">Alertes Critiques</div><div class="kpi-value" style="color: #EF4444;">${critiques.length}</div></div>
+                <div class="kpi-card" style="border-color: #10B981;"><div class="kpi-title" style="color: #10B981;">Points Forts</div><div class="kpi-value" style="color: #10B981;">${positifs.length}</div></div>
+            </div>
+
+            <div class="section">
+                <div class="section-title" style="border-color: #FFB81C;">🔍 Analyse Terrain HRBP</div>
+                <div class="analyse-box">
+                    "${analyseTerrain}"
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title" style="border-color: #EF4444;">🛑 Les Sujets Chauds / Tensions (Top -)</div>
+                ${critiques.length + tensions.length === 0 ? '<p style="font-size:14px; color:#64748B;">Aucune alerte critique ou tension signalée cette semaine.</p>' : ''}
+                ${[...critiques, ...tensions].map(s => `
+                    <div class="signal-item">
+                        <span class="badge badge-${s.rating}">Niveau ${s.rating}</span> <strong>[${s.sector}]</strong> ${s.title} - <span style="color:#475569;">${s.description}</span>
+                    </div>
+                `).join('')}
+            </div>
+
+            <div class="section">
+                <div class="section-title" style="border-color: #10B981;">✨ Les Coups de Projecteur (Top +)</div>
+                ${positifs.length === 0 ? '<p style="font-size:14px; color:#64748B;">Aucun point fort spécifique remonté cette semaine.</p>' : ''}
+                ${positifs.map(s => `
+                    <div class="signal-item">
+                        <span class="badge badge-4">Succès</span> <strong>[${s.sector}]</strong> ${s.title} - <span style="color:#475569;">${s.description}</span>
+                    </div>
+                `).join('')}
+            </div>
+
+            <div class="no-print" style="margin-top: 40px; text-align: center;">
+                <button onclick="window.print()" style="background:#002244; color:white; padding: 10px 20px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:14px;">🖨️ Imprimer ou Sauvegarder en PDF</button>
+            </div>
+        </body>
+        </html>
+    `;
+
+    // 5. Ouverture du rapport dans un nouvel onglet
+    const fenetreRapport = window.open('', '_blank');
+    fenetreRapport.document.write(structureRapport);
+    fenetreRapport.document.close();
+};
