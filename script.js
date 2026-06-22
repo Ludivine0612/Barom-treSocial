@@ -1,3 +1,4 @@
+
 // --- BASE DE CONNAISSANCES DES HRBP AIRBUS HELICOPTERS (VERSION EXHAUSTIVE 2026) ---
 // --- BASE DE CONNAISSANCES DES HRBP AIRBUS HELICOPTERS (MIS À JOUR JUIN 2026) ---
 const hrbpMapping = {
@@ -122,30 +123,40 @@ function initializeSectors() {
     });
 }
 
-// --- RÉCUPÉRATION DES DONNÉES EN LIGNE (SUPABASE) ---
-// --- RÉCUPÉRATION DES DONNÉES EN LIGNE (UNIQUEMENT LA SEMAINE EN COURS) ---
+// --- RÉCUPÉRATION DES DONNÉES EN LIGNE (FILTRÉES EN LOCAL POUR LA SEMAINE EN COURS) ---
 async function fetchDataFromSupabase() {
     try {
-        const now = new Date();
-        const day = now.getDay();
-        // Calcul du lundi de la semaine en cours
-        const diff = now.getDate() - day + (day === 0 ? -6 : 1);
-        const monday = new Date(now.setDate(diff));
-        monday.setHours(0, 0, 0, 0);
-        
-        // Format YYYY-MM-DD exigé par Supabase
-        const mondayISO = monday.toISOString().split('T')[0];
-
-        // On demande à Supabase uniquement les lignes créées depuis ce lundi
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/remontees?date=gte.${mondayISO}&select=*`, {
+        // 1. On récupère TOUTES les données de Supabase en sécurité
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/remontees?select=*`, {
             method: "GET",
             headers: {
                 "apikey": SUPABASE_ANON_KEY,
                 "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
             }
         });
+
         if (response.ok) {
-            socialData = await response.json();
+            const allData = await response.json();
+
+            // 2. Calcul du lundi de la semaine en cours à 00:00:00
+            const now = new Date();
+            const day = now.getDay();
+            const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+            const startOfWeek = new Date(now.setDate(diff));
+            startOfWeek.setHours(0, 0, 0, 0);
+
+            // 3. On filtre en JavaScript pour ne garder QUE la semaine en cours
+            socialData = allData.filter(item => {
+                if (!item.date) return false;
+                // On extrait la partie "YYYY-MM-DD" avant la barre "|"
+                const datePart = item.date.split('|')[0].trim(); 
+                const itemDate = new Date(datePart);
+                
+                // On garde le signal si sa date est supérieure ou égale au lundi matin 00:00
+                return itemDate >= startOfWeek;
+            });
+
+            // 4. On met à jour l'écran
             renderDashboard();
         }
     } catch (error) {
@@ -382,28 +393,29 @@ const rawDate = `${y}-${m}-${d}`;
     });
 }
 
-// --- SUPPRESSION SUR SUPABASE ---
+// --- ARCHIVAGE LOGIQUE SUR SUPABASE (SANS EFFACER) ---
 async function executeDeleteInSupabase(id) {
     try {
+        // On utilise PATCH pour modifier uniquement la colonne is_archived
         const response = await fetch(`${SUPABASE_URL}/rest/v1/remontees?id=eq.${id}`, {
-            method: "DELETE",
+            method: "PATCH",
             headers: {
                 "apikey": SUPABASE_ANON_KEY,
                 "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
                 "Content-Type": "application/json"
-            }
+            },
+            body: JSON.stringify({ is_archived: true }) // On bascule l'indicateur à true
         });
         
         if (response.ok || response.status === 204) {
-            await fetchDataFromSupabase();
+            await fetchDataFromSupabase(); // Rafraîchit l'écran immédiatement
         } else {
-            console.error("Échec de suppression Supabase, statut:", response.status);
+            console.error("Échec de l'archivage Supabase, statut:", response.status);
         }
     } catch (error) {
-        console.error("Erreur réseau lors de la suppression :", error);
+        console.error("Erreur réseau lors de l'archivage :", error);
     }
 }
-
 // --- EXPORTATION DES ARCHIVES ---
 // --- EXPORTATION DE L'INTÉGRALITÉ DES ARCHIVES (TOUTES LES SEMAINES) ---
 window.exportArchives = async function() {
