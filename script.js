@@ -275,8 +275,14 @@ function calculateGlobalScores(dataToCalculate) {
     const scores = { ED: { total: 0, count: 0 }, ET: { total: 0, count: 0 }, ES: { total: 0, count: 0 }, Corporate: { total: 0, count: 0 } };
     let siteTotal = 0, siteCount = 0;
 
+    const mappingInsensible = {};
+    Object.keys(hrbpMapping).forEach(key => {
+        mappingInsensible[key.toLowerCase().trim()] = hrbpMapping[key];
+    });
+
     dataToCalculate.forEach(item => {
-        const mapping = hrbpMapping[item.sector];
+        const sectorKey = item.sector ? item.sector.toLowerCase().trim() : "";
+        const mapping = mappingInsensible[sectorKey];
         if (mapping) {
             const ratingNum = parseFloat(item.rating);
             scores[mapping.group].total += ratingNum;
@@ -314,10 +320,17 @@ function calculateGlobalScores(dataToCalculate) {
 }
 
 function applyScoreStyle(element, score) {
-    if (score >= 3.3) element.style.color = "var(--color-positive)";
-    else if (score >= 2.5) element.style.color = "var(--color-neutral)";
-    else if (score >= 1.8) element.style.color = "var(--color-warning)";
+    if (score >= 2.9) element.style.color = "var(--color-positive)";
+    else if (score >= 2.2) element.style.color = "var(--color-warning)";
     else element.style.color = "var(--color-critical)";
+}
+
+function extraireListeTitresHtml(tableauElements) {
+    if (!tableauElements || tableauElements.length === 0) return "";
+    const titresUniques = [...new Set(tableauElements.map(el => el.title.trim()))];
+    return `<ul style="margin: 4px 0 12px 20px; padding: 0; font-size: 13px; color: #475569; list-style-type: square;">
+        ${titresUniques.map(titre => `<li><strong>${titre}</strong></li>`).join('')}
+    </ul>`;
 }
 
 function getFriendlyDate(savedDateString) {
@@ -458,7 +471,7 @@ if (formElement) {
         const siteAppartenance = metaSector ? metaSector.site : "Marignane";
 
         const newPayload = {
-            sector: sector.toUpperCase().trim(), 
+            sector: sector.trim(), 
             hrbp, 
             title, 
             description, 
@@ -598,7 +611,6 @@ setInterval(fetchDataFromSupabase, 30000);
 
 // --- EXTRACTION ET GÉNÉRATION DU RAPPORT RH FILTRÉ AVEC GRAPHIQUE ---
 window.genererRapportSemaine = function() {
-    // 1. Sélection adaptative des données
     let dataRapport = socialData;
     if (currentSiteFilter !== "France") {
         dataRapport = socialData.filter(item => item.site === currentSiteFilter);
@@ -609,11 +621,9 @@ window.genererRapportSemaine = function() {
         return;
     }
 
-    // 2. CAPTURE DU GRAPHIQUE (Conversion Canvas vers Image)
     const chartCanvas = document.getElementById('airbusDatavizChart');
     let chartImage = "";
     if (chartCanvas) {
-        // On récupère l'image en Base64 (PNG)
         chartImage = chartCanvas.toDataURL('image/png');
     }
 
@@ -627,13 +637,49 @@ window.genererRapportSemaine = function() {
     const noteGlobale = (sommeNotes / totalSignaux).toFixed(1);
 
     let couleurScore = "#10B981"; 
-    if (noteGlobale <= 2.0) couleurScore = "#EF4444"; 
-    else if (noteGlobale <= 3.0) couleurScore = "#F59E0B"; 
+    let qualificatifClimat = "";
+
+    const noteNum = parseFloat(noteGlobale);
+    if (noteNum >= 2.9) {
+        couleurScore = "#10B981"; 
+        qualificatifClimat = "au beau fixe, témoignant d'un climat social globalement sain, serein et particulièrement bien maîtrisé sur le terrain";
+    } else if (noteNum >= 2.2) {
+        couleurScore = "#F59E0B"; 
+        qualificatifClimat = "sous vigilance, marqué par l'émergence de signaux de tension ou de points d'attention locaux à monitorer activement";
+    } else {
+        couleurScore = "#EF4444"; 
+        qualificatifClimat = "critique, exigeant l'analyse immédiate des causes sous-jacentes et le déploiement rapide de plans d'action correctifs";
+    }
 
     let nomSiteRapport = currentSiteFilter === "France" ? "Nationale France (Consolidée)" : (currentSiteFilter === "PLB" ? "Paris-Le Bourget" : "Marignane");
-    let analyseTerrain = `Le climat social synthétique pour l'entité ${nomSiteRapport} affiche cette semaine une note globale de ${noteGlobale}/4.`;
+    
+    let phraseNote = `Le climat social synthétique évalué sur le périmètre <strong>${nomSiteRapport}</strong> affiche une note globale de <strong>${noteGlobale} / 4</strong>, positionnant l'entité dans un état ${qualificatifClimat}.<br><br>`;
+    
+    let phraseCritique = "";
+    if (critiques.length > 0 || tensions.length > 0) {
+        phraseCritique = `<strong>⚠️ Alertes & Vigilances RH :</strong><br>Le système recense <strong>${critiques.length} alerte(s) critique(s) (Niveau 1)</strong> et <strong>${tensions.length} zone(s) de tension (Niveau 2)</strong>. Les principaux points durs identifiés concernent les thématiques suivantes :`;
+        phraseCritique += extraireListeTitresHtml([...critiques, ...tensions]);
+    } else {
+        phraseCritique = "<strong>👍 Alertes & Vigilances RH :</strong><br>Indicateurs optimaux : aucun point d'alerte critique ou signal de tension n'est à déplorer cette semaine sur l'ensemble des directions rattachées.<br><br>";
+    }
 
-    // 3. CONSTRUCTION DE LA STRUCTURE DU RAPPORT AVEC LE GRAPHIQUE
+    let phraseNeutre = "";
+    if (stables.length > 0) {
+        phraseNeutre = `<strong>⚖️ Périmètres Stables :</strong><br>Le dialogue social et l'environnement de travail demeurent équilibrés (Niveau 3) au sein des dossiers ou départements suivants :`;
+        phraseNeutre += extraireListeTitresHtml(stables);
+    }
+
+    let phrasePositive = "";
+    if (positifs.length > 0) {
+        phrasePositive = `<strong>✨ Dynamiques Positives & Points Forts :</strong><br>Enfin, la cohésion et la performance collective sont soutenues by <strong>${positifs.length} événement(s) notable(s) ou succès d'équipe (Niveau 4)</strong>, valorisés sur les sujets suivants :`;
+        phrasePositive += extraireListeTitresHtml(positifs);
+    } else {
+        phrasePositive = "<strong>✨ Dynamiques Positives & Points Forts :</strong><br>Aucun point fort exceptionnel ou jalon particulièrement positif n'a été consigné cette semaine pour venir surélever l'indice brut sur cette période.";
+    }
+
+    let analyseTerrainAutomatique = `${phraseNote} ${phraseCritique} ${phraseNeutre} ${phrasePositive}`;
+
+    // LE CHANGEMENT EST ICI : Structure HTML inversée (KPIs d'abord, bloc Analyse ensuite)
     let structureRapport = `
         <html>
         <head>
@@ -647,8 +693,9 @@ window.genererRapportSemaine = function() {
                 .kpi-container { display: flex; gap: 20px; margin-bottom: 30px; }
                 .kpi-card { flex: 1; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; text-align: center; }
                 .kpi-value { font-size: 24px; font-weight: bold; margin-top: 5px; }
+
+                .context-box { background: #F8FAFC; border-left: 4px solid #002244; padding: 20px; margin-bottom: 30px; font-size: 13.5px; color: #1E293B; line-height: 1.6; border-radius: 4px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); }
                 
-                /* Style spécifique pour le graphique dans le rapport */
                 .chart-box { border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; margin-bottom: 35px; text-align: center; background: #F8FAFC; }
                 .chart-box img { max-width: 100%; height: auto; border-radius: 8px; }
                 .chart-title { font-size: 12px; font-weight: 800; color: #002244; text-transform: uppercase; margin-bottom: 15px; text-align: left; border-left: 4px solid #FFB81C; padding-left: 10px; }
@@ -687,6 +734,11 @@ window.genererRapportSemaine = function() {
                 </div>
             </div>
 
+            <div class="context-box">
+                <span style="font-size: 14px; font-weight: 800; color: #002244; text-transform: uppercase; display: block; margin-bottom: 10px; border-bottom: 1px dashed #CBD5E1; padding-bottom: 4px;">Analyse RH du Climat Social :</span>
+                ${analyseTerrainAutomatique}
+            </div>
+
             <div class="chart-box">
                 <div class="chart-title">Visualisation de la répartition par direction</div>
                 <img src="${chartImage}" alt="Graphique Social">
@@ -716,7 +768,6 @@ window.genererRapportSemaine = function() {
     fenetreRapport.document.close();
 };
 
-// --- GENERATION ET MISE A JOUR DE LA DATAVIZ CHART.JS ---
 // --- GENERATION ET MISE A JOUR DE LA DATAVIZ CHART.JS ---
 function updateAirvizStacked() {
     const ctx = document.getElementById('airbusDatavizChart');
@@ -760,14 +811,12 @@ function updateAirvizStacked() {
     let labelsAxesX = [];
     let datasetsAffiche = [];
 
-    // STRUCTURES DES COULEURS THERMIQUES UNIQUEMENT
-    const colorCritique = '#EF4444'; // Rouge
-    const colorTension = '#F59E0B';  // Orange
-    const colorStable = '#002244';   // Navy
-    const colorFort = '#10B981';     // Vert
+    const colorCritique = '#EF4444'; 
+    const colorTension = '#F59E0B';  
+    const colorStable = '#002244';   
+    const colorFort = '#10B981';     
 
     if (!isFranceMode) {
-        // --- MODE SITE UNIQUE (MA ou PLB) ---
         labelsAxesX = ['Production (ED)', 'Engineering (ET)', 'Support & MRO (ES)', 'Corporate'];
         const activeStats = currentSiteFilter === "Marignane" ? stats.Marignane : stats.PLB;
         
@@ -778,8 +827,6 @@ function updateAirvizStacked() {
             { label: 'Point Fort ✨', data: directions.map(g => activeStats[g].r4), backgroundColor: colorFort, borderRadius: 4, barThickness: 24 }
         ];
     } else {
-        // --- MODE FRANCE CONSOLIDÉ (LA CORRECTION VISUELLE MAGIQUE) ---
-        // On duplique chaque direction sur l'axe pour séparer physiquement MA et PLB
         labelsAxesX = [
             'Production ED (MA)', 'Production ED (PLB)',
             'Engineering ET (MA)', 'Engineering ET (PLB)',
@@ -787,8 +834,6 @@ function updateAirvizStacked() {
             'Corporate (MA)', 'Corporate (PLB)'
         ];
 
-        // On distribue les données sur les 8 positions de l'axe
-        // Index pairs = Marignane, Index impairs = Le Bourget
         datasetsAffiche = [
             {
                 label: 'Critique 🛑',
