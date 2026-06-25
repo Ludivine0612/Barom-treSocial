@@ -6,126 +6,167 @@
     <title>Baromètre Social - Airbus Helicopters</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 </head>
 <body>
 
-    <header>
-        <div class="header-left">
-            <svg class="airbus-logo" viewBox="0 0 180 20" xmlns="http://www.w3.org/2000/svg" style="width: 150px; height: auto;">
-                <text x="0" y="16" font-family="'Inter', sans-serif" font-weight="900" font-size="20" fill="#FFFFFF" letter-spacing="3">AIRBUS</text>
-            </svg>
-            <div class="app-branding">
-                <h1>Baromètre Social</h1>
-                <span>Espace Digital HRBP • Helicopters</span>
-            </div>
-        </div>
-        <div class="header-right" style="display: flex; align-items: center; gap: 1rem;">
-            <button onclick="exportArchives()" style="background: var(--airbus-amber); color: var(--airbus-navy); font-weight: 700; border: none; padding: 0.6rem 1.2rem; border-radius: 50px; cursor: pointer; font-size: 0.85rem; transition: background 0.2s;">
-                📁 Accéder aux Archives (.json)
-            </button>
-            <button onclick="genererRapportSemaine()" style="background: #10B981; color: white; font-weight: 700; border: none; padding: 0.6rem 1.2rem; border-radius: 50px; cursor: pointer; font-size: 0.85rem; transition: opacity 0.2s;">
-        📊 Extraire la Synthèse RH
-    </button>
-            <div class="header-date" id="currentDate">-- / -- / ----</div>
-        </div>
-    </header>
-
-    <main>
-        <section class="form-container">
-            <div class="form-header">
-                <h2>Nouvelle implémentation</h2>
-                <p>Consigner les signaux faibles et forts du terrain</p>
-            </div>
+    <div id="login-container" style="display: flex; min-height: 100vh; align-items: center; justify-content: center; background: var(--bg-app);">
+        <div style="background: white; padding: 3rem; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,34,68,0.05); width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--border-subtle);">
+            <h2 style="color: var(--airbus-navy); margin-bottom: 0.5rem; font-weight: 800;">Espace HRBP</h2>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 2rem;">Authentification Baromètre Airbus Helicopters</p>
             
-            <form id="barometreForm">
-                <div class="form-group">
-                    <label for="sector">Secteur / Direction</label>
-                    <select id="sector" required></select>
+            <form id="loginForm" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <div style="text-align: left;">
+                    <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">Email Airbus</label>
+                    <input type="email" id="loginEmail" placeholder="nom.prenom@airbus.com" required style="width:100%; padding: 0.85rem; border-radius: 12px; border: 1px solid var(--border-subtle); margin-top: 0.5rem; background: #F8FAFC;">
                 </div>
-
-                <div class="form-group">
-                    <label for="hrbpName">HRBP Référent (Automatique)</label>
-                    <input type="text" id="hrbpName" style="font-weight: 600; color: #002244; background-color: #E2E8F0;" placeholder="Nom du HRBP..." readonly>
+                <div style="text-align: left;">
+                    <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">Mot de passe</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required style="width:100%; padding: 0.85rem; border-radius: 12px; border: 1px solid var(--border-subtle); margin-top: 0.5rem; background: #F8FAFC;">
                 </div>
-
-                <div class="form-group">
-                    <label for="title">Sujet / Thématique</label>
-                    <input type="text" id="title" placeholder="Ex: Climat d'équipe, Charge de travail..." required>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Explications / Contexte</label>
-                    <textarea id="description" placeholder="Détails factuels du constat..." required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="rating">Évaluation de l'impact</label>
-                    <select id="rating" required>
-                        <option value="1">🛑 1 - Impact critique / Alerte rouge</option>
-                        <option value="2">⚠️ 2 - Point d'attention / Tension</option>
-                        <option value="3">👍 3 - Climat Stable / Neutre</option>
-                        <option value="4">✨ 4 - Point Fort / Événement Positif</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn-submit">Enregistrer sur le Dashboard</button>
+                <button type="submit" style="background: var(--airbus-navy); color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s;">Se connecter</button>
             </form>
-        </section>
-
-        <section class="dashboard-container">
-            <div class="dashboard-header">
-                <h2>Indicateurs & Sujets en cours</h2>
-                <div class="live-pulse"></div>
-            </div>
-            
-            <div class="kpi-dashboard-bar" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1rem;">
-                <div style="background: white; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle); text-align: center;">
-                    <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Moyenne ED</p>
-                    <h3 id="score-ED" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem;">--</h3>
-                </div>
-                <div style="background: white; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle); text-align: center;">
-                    <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Moyenne ET</p>
-                    <h3 id="score-ET" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem;">--</h3>
-                </div>
-                <div style="background: white; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle); text-align: center;">
-                    <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Moyenne ES</p>
-                    <h3 id="score-ES" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem;">--</h3>
-                </div>
-                <div style="background: white; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle); text-align: center;">
-                    <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Moyenne Corporate</p>
-                    <h3 id="score-Corporate" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem;">--</h3>
-                </div>
-                <div style="background: var(--airbus-navy); padding: 1rem; border-radius: 12px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,34,68,0.15);">
-                    <p style="font-size: 0.75rem; font-weight: 700; color: var(--airbus-amber);">GLOBAL SITE</p>
-                    <h3 id="score-Site" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem; color: white;">--</h3>
-                </div>
-            </div>
-            
-            <div id="subjectsList"></div>
-        </section>
-    </main>
-
-    <div id="airbusConfirmModal" class="ab-modal">
-    <div class="ab-modal-content">
-        <div class="ab-modal-header">
-            <div class="header-icon">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                </svg>
-            </div>
-            <span class="ab-modal-title">Confirmation de suppression</span>
-        </div>
-        <div class="ab-modal-body">
-            <p>Êtes-vous sûr de vouloir supprimer définitivement ce signal ?</p>
-            <p class="ab-modal-warning">Cette action est irréversible et retirera l'élément des tableaux de bord de tous les HRBP.</p>
-        </div>
-        <div class="ab-modal-footer">
-            <button id="btnCancelDelete" class="ab-btn-secondary">Annuler</button>
-            <button id="btnConfirmDelete" class="ab-btn-danger">Oui, supprimer</button>
         </div>
     </div>
-</div>
 
-<script src="script.js" defer></script>
+
+    <div id="app-container" style="display: none;">
+        
+        <header>
+            <div class="header-left">
+                <svg class="airbus-logo" viewBox="0 0 180 20" xmlns="http://www.w3.org/2000/svg" style="width: 150px; height: auto;">
+                    <text x="0" y="16" font-family="'Inter', sans-serif" font-weight="900" font-size="20" fill="#FFFFFF" letter-spacing="3">AIRBUS</text>
+                </svg>
+                <div class="app-branding">
+                    <h1>Baromètre Social</h1>
+                    <span>HRBP • Helicopters</span>
+                </div>
+            </div>
+            <div class="header-right" style="display: flex; align-items: center; gap: 1rem;">
+                <button onclick="handleLogout()" style="background: transparent; color: #FFFFFF; opacity: 0.7; border: 1px solid rgba(255,255,255,0.3); padding: 0.6rem 1.2rem; border-radius: 50px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;">
+                    🚪 Déconnexion
+                </button>
+                <button onclick="exportArchives()" style="background: var(--airbus-amber); color: var(--airbus-navy); font-weight: 700; border: none; padding: 0.6rem 1.2rem; border-radius: 50px; cursor: pointer; font-size: 0.85rem; transition: background 0.2s;">
+                    📁 Accéder aux Archives (.json)
+                </button>
+                <button onclick="genererRapportSemaine()" style="background: #10B981; color: white; font-weight: 700; border: none; padding: 0.6rem 1.2rem; border-radius: 50px; cursor: pointer; font-size: 0.85rem; transition: opacity 0.2s;">
+                    📊 Extraire la Synthèse RH
+                </button>
+                <div class="header-date" id="currentDate">-- / -- / ----</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="form-container">
+                <div class="form-header">
+                    <h2>Nouvelle implémentation</h2>
+                    <p>Consigner les signaux faibles et forts du terrain</p>
+                </div>
+                
+                <form id="barometreForm">
+                    <div class="form-group">
+                        <label for="sector">Secteur / Direction</label>
+                        <select id="sector" required></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hrbpName">HRBP Référent (Automatique)</label>
+                        <input type="text" id="hrbpName" style="font-weight: 600; color: #002244; background-color: #E2E8F0;" placeholder="Nom du HRBP..." readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Sujet / Thématique</label>
+                        <input type="text" id="title" placeholder="Ex: Climat d'équipe, Charge de travail..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Explications / Contexte</label>
+                        <textarea id="description" placeholder="Détails factuels du constat..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rating">Évaluation de l'impact</label>
+                        <select id="rating" required>
+                            <option value="1">🛑 1 - Impact critique / Alerte rouge</option>
+                            <option value="2">⚠️ 2 - Point d'attention / Tension</option>
+                            <option value="3">👍 3 - Climat Stable / Neutre</option>
+                            <option value="4">✨ 4 - Point Fort / Événement Positif</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Enregistrer sur le Dashboard</button>
+                </form>
+            </section>
+
+            <section class="dashboard-container">
+                <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <h2>Indicateurs & Sujets en cours</h2>
+                    
+                    <div style="display: flex; align-items: center; gap: 0.4rem; background: #E2E8F0; padding: 0.35rem; border-radius: 50px; border: 1px solid var(--border-subtle);">
+                        <button type="button" onclick="changerSiteFiltre('Marignane')" id="btn-site-Marignane" style="background: var(--airbus-navy); color: white; border: none; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;">Marignane</button>
+                        <button type="button" onclick="changerSiteFiltre('PLB')" id="btn-site-PLB" style="background: transparent; color: var(--text-secondary); border: none; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;">Paris-Le Bourget</button>
+                        <button type="button" onclick="changerSiteFiltre('France')" id="btn-site-France" style="background: transparent; color: var(--text-secondary); border: none; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;">France (Global)</button>
+                    </div>
+
+                    <div class="live-pulse"></div>
+                </div>
+                
+                <div class="kpi-dashboard-bar" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                    <div style="background: white; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle); text-align: center;">
+                        <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Moyenne ED</p>
+                        <h3 id="score-ED" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem;">--</h3>
+                    </div>
+                    <div style="background: white; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle); text-align: center;">
+                        <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Moyenne ET</p>
+                        <h3 id="score-ET" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem;">--</h3>
+                    </div>
+                    <div style="background: white; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle); text-align: center;">
+                        <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Moyenne ES</p>
+                        <h3 id="score-ES" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem;">--</h3>
+                    </div>
+                    <div style="background: white; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle); text-align: center;">
+                        <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Moyenne Corporate</p>
+                        <h3 id="score-Corporate" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem;">--</h3>
+                    </div>
+                    <div style="background: var(--airbus-navy); padding: 1rem; border-radius: 12px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,34,68,0.15);">
+                        <p style="font-size: 0.75rem; font-weight: 700; color: var(--airbus-amber);" id="kpi-site-title">GLOBAL SITE</p>
+                        <h3 id="score-Site" style="font-size: 1.4rem; font-weight: 800; margin-top: 0.25rem; color: white;">--</h3>
+                    </div>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 20px; border: 1px solid var(--border-subtle); margin-bottom: 1rem;">
+                    <p style="font-size: 0.8rem; font-weight: 700; color: var(--airbus-navy); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">📈 Comparatif des Climats Sociaux par Direction</p>
+                    <div style="position: relative; height: 220px; width: 100%;">
+                        <canvas id="airbusDatavizChart"></canvas>
+                    </div>
+                </div>
+                
+                <div id="subjectsList"></div>
+            </section>
+        </main>
+
+    </div> 
+
+    <div id="airbusConfirmModal" class="ab-modal">
+        <div class="ab-modal-content">
+            <div class="ab-modal-header">
+                <div class="header-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <span class="ab-modal-title">Confirmation de suppression</span>
+            </div>
+            <div class="ab-modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer définitivement ce signal ?</p>
+                <p class="ab-modal-warning">Cette action est irréversible et retirera l'élément des tableaux de bord de tous les HRBP.</p>
+            </div>
+            <div class="ab-modal-footer">
+                <button id="btnCancelDelete" class="ab-btn-secondary">Annuler</button>
+                <button id="btnConfirmDelete" class="ab-btn-danger">Oui, supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
 </body>
 </html>
