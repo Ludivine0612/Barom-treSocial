@@ -721,15 +721,15 @@ window.genererRapportSemaine = function() {
 
             <div class="kpi-container">
                 <div class="kpi-card" style="border-top: 4px solid ${couleurScore};">
-                    <div style="font-size:10px; font-weight:bold; color:#64748B;">MOYENNE</div>
+                    <div style="font-size:10px; font-weight:bold; color:#64748B;">NOTE MOYENNE</div>
                     <div class="kpi-value" style="color: ${couleurScore};">${noteGlobale} / 4</div>
                 </div>
                 <div class="kpi-card">
-                    <div style="font-size:10px; font-weight:bold; color:#64748B;">REMONTEES</div>
+                    <div style="font-size:10px; font-weight:bold; color:#64748B;">REMONTEES HRBP</div>
                     <div class="kpi-value">${totalSignaux}</div>
                 </div>
                 <div class="kpi-card">
-                    <div style="font-size:10px; font-weight:bold; color:#EF4444;">CRITIQUES</div>
+                    <div style="font-size:10px; font-weight:bold; color:#EF4444;">POINT(S) CRITIQUE(S)</div>
                     <div class="kpi-value" style="color:#EF4444;">${critiques.length}</div>
                 </div>
             </div>
