@@ -92,7 +92,7 @@ const hrbpMapping = {
     "GLOBAL BUSINESS": { name: "Marc Saladino", siglum: "EB", group: "Corporate", site: "Marignane" },
     "FINANCE": { name: "Bettina Tabary", siglum: "EF & F", group: "Corporate", site: "Marignane" },
     "DIGITAL & TRANSFORMATION": { name: "Caroline Cornut", siglum: "EI", group: "Corporate", site: "Marignane" },
-    "AVIATION SAFETY & QUALITY": { name: "Morgane Raynaud", siglum: "EG", group: "Corporate", site: "Marignane" },
+    "AVIATION SAFETY & QUALITY": { name: "Morgane Raynaud", siglum: "EQ", group: "Corporate", site: "Marignane" },
     "PROGRAMS": { name: "Mélissa Oger", siglum: "EX (sauf EXN)", group: "Corporate", site: "Marignane" },
     "NH90 PROGRAM": { name: "Emily Gibbs", siglum: "EXN", group: "Corporate", site: "Marignane" },
     "SUSTAINABILITY & COMMUNICATIONS": { name: "Thomas Astier", siglum: "G", group: "Corporate", site: "Marignane" },
