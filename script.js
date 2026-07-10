@@ -1,3 +1,4 @@
+
 // --- BASE DE CONNAISSANCES DES HRBP AIRBUS HELICOPTERS (VERSION MULTI-SITE INTERNATIONALE 2026) ---
 const hrbpMapping = {
     // === MARIGNANE : CLUSTER PRODUCTION & SUPPLY CHAIN (ED) ===
@@ -91,7 +92,7 @@ const hrbpMapping = {
     "GLOBAL BUSINESS": { name: "Marc Saladino", siglum: "EB", group: "Corporate", site: "Marignane" },
     "FINANCE": { name: "Bettina Tabary", siglum: "EF & F", group: "Corporate", site: "Marignane" },
     "DIGITAL & TRANSFORMATION": { name: "Caroline Cornut", siglum: "EI", group: "Corporate", site: "Marignane" },
-    "AVIATION SAFETY & QUALITY": { name: "Morgane Raynaud", siglum: "EQ", group: "Corporate", site: "Marignane" },
+    "AVIATION SAFETY & QUALITY": { name: "Morgane Raynaud", siglum: "EG", group: "Corporate", site: "Marignane" },
     "PROGRAMS": { name: "Mélissa Oger", siglum: "EX (sauf EXN)", group: "Corporate", site: "Marignane" },
     "NH90 PROGRAM": { name: "Emily Gibbs", siglum: "EXN", group: "Corporate", site: "Marignane" },
     "SUSTAINABILITY & COMMUNICATIONS": { name: "Thomas Astier", siglum: "G", group: "Corporate", site: "Marignane" },
@@ -118,7 +119,8 @@ const TEAM_LEADERS = {
     "julie.vidal@airbus.com": "ED",
     "emmanuelle.martelli@airbus.com": "ET",
     "clemence.thiebaut@airbus.com": "ES",
-    "morgane.raynaud@airbus.com": "Corporate" 
+    "morgane.raynaud@airbus.com": "Corporate",
+    "ludivine.sevilla@airbus.com": "ADMIN"
 };
 
 let socialData = [];
@@ -177,19 +179,17 @@ function checkUserSession() {
     const sessionStr = localStorage.getItem('supabase_session');
     const loginContainer = document.getElementById('login-container');
     const appContainer = document.getElementById('app-container');
-    const btnArchives = document.getElementById('btnArchives'); // Récupère le bouton
+    const btnArchives = document.getElementById('btnArchives'); 
 
     if (sessionStr) {
         if (loginContainer) loginContainer.style.display = 'none';
         if (appContainer) appContainer.style.display = 'block';
         
-        // --- SÉCURITÉ ADMIN ---
-        // Si c'est toi, on affiche le bouton d'accès aux archives, sinon il reste caché
         if (btnArchives) {
             if (isCurrentUserAdmin()) {
-                btnArchives.style.display = 'inline-block'; // Visible uniquement pour toi
+                btnArchives.style.display = 'inline-block'; 
             } else {
-                btnArchives.style.display = 'none'; // Masqué pour les autres
+                btnArchives.style.display = 'none'; 
             }
         }
         
@@ -197,7 +197,7 @@ function checkUserSession() {
     } else {
         if (loginContainer) loginContainer.style.display = 'flex';
         if (appContainer) appContainer.style.display = 'none';
-        if (btnArchives) btnArchives.style.display = 'none'; // Caché si déconnecté
+        if (btnArchives) btnArchives.style.display = 'none'; 
         
         const savedEmail = localStorage.getItem('remembered_email');
         const emailInput = document.getElementById('loginEmail');
@@ -340,7 +340,7 @@ function initializeSectors() {
                 s.style.transform = (val == currentStatus) ? "scale(1.3)" : "scale(1)";
                 s.style.transition = "all 0.3s ease";
 
-                if (TEAM_LEADERS[normalizedEmail] === group) {
+                if (TEAM_LEADERS[normalizedEmail] === group || TEAM_LEADERS[normalizedEmail] === "ADMIN") {
                     s.style.cursor = "pointer";
                     s.onclick = async function() {
                         climateInfo.innerText = "Enregistrement...";
@@ -352,9 +352,9 @@ function initializeSectors() {
                         });
                         s.style.opacity = "1";
                         s.style.transform = "scale(1.3)";
-                        climateInfo.innerText = "Météo mise à jour par vos soins.";
+                        climateInfo.innerText = "Météo mise à jour avec succès.";
                     };
-                    if(val == currentStatus) climateInfo.innerText = "Vous êtes Team Leader : cliquez pour modifier.";
+                    if(val == currentStatus) climateInfo.innerText = "Droits d'édition actifs : cliquez pour modifier la météo.";
                 } else {
                     s.style.cursor = "default";
                     s.onclick = null;
@@ -857,6 +857,10 @@ if (formElement) {
 
             if (response.ok) {
                 formElement.reset();
+                
+                // --- CORRECTION ICI : Le champ automatique du HRBP est vidé après soumission ---
+                document.getElementById('hrbpName').value = "";
+                
                 await fetchDataFromSupabase();
                 
                 const climateZone = document.getElementById('climate-zone');
