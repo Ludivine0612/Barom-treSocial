@@ -33,7 +33,7 @@ const hrbpMapping = {
     "PROCUREMENT GOVERNANCE & STRATEGY": { name: "Astrid ECUYER", siglum: "PY", group: "ED", site: "Marignane" },
 
     // === MARIGNANE : CLUSTER SUPPORT & SERVICES (ES) ===
-    "GLOBAL ES": { name: "Clémence Thiebaut", siglum: "ES", group: "Corporate", site: "Marignane" },
+    "GLOBAL ES": { name: "Clémence Thiebaut", siglum: "ES", group: "ES", site: "Marignane" },
     "TECHNICAL DATA PRODUCT POLICY & MGT": { name: "Virginie GRIMALDI", siglum: "ESAC", group: "ES", site: "Marignane" },
     "TECHDATA & SERVICE BULLETINS": { name: "Virginie GRIMALDI", siglum: "ESAD", group: "ES", site: "Marignane" },
     "AIRCRAFT MRO GERMANY": { name: "Virginie GRIMALDI", siglum: "ESAM", group: "ES", site: "Marignane" },
@@ -69,7 +69,7 @@ const hrbpMapping = {
     
 
     // === MARIGNANE : CLUSTER ENGINEERING (ET) ===
-    "GLOBAL ET": { name: "Violaine Faveris", siglum: "ET", group: "Corporate", site: "Marignane" },
+    "GLOBAL ET": { name: "Violaine Faveris", siglum: "ET", group: "ET", site: "Marignane" },
     "ENGINEERING TECHNICAL AUDIT": { name: "Violaine FAVERIS", siglum: "ETA", group: "ET", site: "Marignane" },
     "CHIEF ENGINEERING": { name: "Emmanuelle MARTELLI", siglum: "ETC", group: "ET", site: "Marignane" },
     "ENGINEERING ENABLERS": { name: "Violaine FAVERIS", siglum: "ETE", group: "ET", site: "Marignane" },
