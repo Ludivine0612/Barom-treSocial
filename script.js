@@ -1,7 +1,7 @@
 // --- BASE DE CONNAISSANCES DES HRBP AIRBUS HELICOPTERS (VERSION MULTI-SITE INTERNATIONALE 2026) ---
 const hrbpMapping = {
     // === MARIGNANE : CLUSTER PRODUCTION & SUPPLY CHAIN (ED) ===
-    "GLOBAL SUPPLY CHAIN": { name: "Julie VIDAL", siglum: "ED", group: "ED", site: "Marignane" },
+    "GLOBAL ED": { name: "Julie VIDAL", siglum: "ED", group: "ED", site: "Marignane" },
     "AIRPLANE DOOR CUSTOMER SERVICE": { name: "Sacha GUILLEMOT", siglum: "EDAC", group: "ED", site: "Marignane" },
     "AIRFRAME": { name: "Caroline FERRI", siglum: "EDCA", group: "ED", site: "Marignane" },
     "PERFORMANCE & IMPROVEMENT": { name: "Céline DI FILIPPO", siglum: "EDCI", group: "ED", site: "Marignane" },
@@ -31,9 +31,9 @@ const hrbpMapping = {
     "PRODUCT IMPROVEMENT MAR": { name: "Francis OTTAVIANI", siglum: "EDXY", group: "ED", site: "Marignane" },
     "BUILDING & CONSTRUCTION FRANCE": { name: "Céline FRAIZ", siglum: "HMFB", group: "ED", site: "Marignane" },
     "PROCUREMENT GOVERNANCE & STRATEGY": { name: "Astrid ECUYER", siglum: "PY", group: "ED", site: "Marignane" },
-    "GLOBAL ED": { name: "Julie Vidal", siglum: "ED", group: "Corporate", site: "Marignane" },
 
     // === MARIGNANE : CLUSTER SUPPORT & SERVICES (ES) ===
+    "GLOBAL ES": { name: "Clémence Thiebaut", siglum: "ES", group: "Corporate", site: "Marignane" },
     "TECHNICAL DATA PRODUCT POLICY & MGT": { name: "Virginie GRIMALDI", siglum: "ESAC", group: "ES", site: "Marignane" },
     "TECHDATA & SERVICE BULLETINS": { name: "Virginie GRIMALDI", siglum: "ESAD", group: "ES", site: "Marignane" },
     "AIRCRAFT MRO GERMANY": { name: "Virginie GRIMALDI", siglum: "ESAM", group: "ES", site: "Marignane" },
@@ -66,9 +66,10 @@ const hrbpMapping = {
     "PROGR SUPPORT LIGHT HELICOPTERS": { name: "Laura TAUPIN", siglum: "ESXL", group: "ES", site: "Marignane" },
     "PSO LEGACY PROGRAMS & TRANSVERSE": { name: "Laura TAUPIN", siglum: "ESXT", group: "ES", site: "Marignane" },
     "PSO MEDIUM & SUPER PUMA": { name: "Laura TAUPIN", siglum: "ESXY", group: "ES", site: "Marignane" },
-    "GLOBAL ES": { name: "Clémence Thiebaut", siglum: "ES", group: "Corporate", site: "Marignane" },
+    
 
     // === MARIGNANE : CLUSTER ENGINEERING (ET) ===
+    "GLOBAL ET": { name: "Violaine Faveris", siglum: "ET", group: "Corporate", site: "Marignane" },
     "ENGINEERING TECHNICAL AUDIT": { name: "Violaine FAVERIS", siglum: "ETA", group: "ET", site: "Marignane" },
     "CHIEF ENGINEERING": { name: "Emmanuelle MARTELLI", siglum: "ETC", group: "ET", site: "Marignane" },
     "ENGINEERING ENABLERS": { name: "Violaine FAVERIS", siglum: "ETE", group: "ET", site: "Marignane" },
@@ -88,9 +89,10 @@ const hrbpMapping = {
     "ENGINEERING TEST, SIMULATION & SERVICES": { name: "Sarah LEVY", siglum: "ETXS", group: "ET", site: "Marignane" },
     "DEV FLIGHT & GROUND TESTS": { name: "Sarah LEVY", siglum: "ETXX", group: "ET", site: "Marignane" },
     "AVIONIC SYSTEMS": { name: "Pauline LENOUVEL", siglum: "ETY", group: "ET", site: "Marignane" },
-    "GLOBAL ET": { name: "Violaine Faveris", siglum: "ET", group: "Corporate", site: "Marignane" },
+    
 
     // === MARIGNANE : CLUSTER CORPORATE ===
+    "GLOBAL CORPORATE FUNCTIONS": { name: "Morgane Raynaud", siglum: "EQ EB EF EI EG EX...", group: "Corporate", site: "Marignane" },
     "GLOBAL BUSINESS": { name: "Marc Saladino", siglum: "EB", group: "Corporate", site: "Marignane" },
     "FINANCE": { name: "Bettina Tabary", siglum: "EF & F", group: "Corporate", site: "Marignane" },
     "DIGITAL & TRANSFORMATION": { name: "Caroline Cornut", siglum: "EI", group: "Corporate", site: "Marignane" },
@@ -102,7 +104,8 @@ const hrbpMapping = {
     "CORPORATE SECRETARY": { name: "Bettina Tabary", siglum: "EK", group: "Corporate", site: "Marignane" },
     "STRATEGY & SUSTAINABILITY": { name: "Thomas Astier", siglum: "EV", group: "Corporate", site: "Marignane" },
     "HUMAN RESOURCES": { name: "Géraldine Weiss", siglum: "EH & H", group: "Corporate", site: "Marignane" },
-    "GLOBAL CORPORATE FUNCTIONS": { name: "Morgane Raynaud", siglum: "EQ EB EF EI EG EX...", group: "Corporate", site: "Marignane" },
+    
+    
     // === SECTEURS PARIS-LE BOURGET (PLB) ===
     "INDUSTRIAL SITE PLB (Nathalie)": { name: "Nathalie OMARINI", siglum: "EDB", group: "ED", site: "PLB" },
     "AVIATION SAFETY & QUALITY PLB": { name: "Karine LOUVERTURE", siglum: "EDQB", group: "ED", site: "PLB" },
