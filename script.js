@@ -33,8 +33,19 @@ const hrbpMapping = {
     "PROCUREMENT GOVERNANCE & STRATEGY": { name: "Astrid ECUYER", siglum: "PY", group: "ED", site: "Marignane" },
 
     // === MARIGNANE : CLUSTER SUPPORT & SERVICES (ES) ===
-    "GLOBAL ES": { name: "Clémence Thiebaut", siglum: "ES", group: "ES", site: "Marignane" },
-    "TECHNICAL DATA PRODUCT POLICY & MGT": { name: "Virginie GRIMALDI", siglum: "ESAC", group: "ES", site: "Marignane" },
+    "GLOBAL ES": { name: "Clémence THIEBAUT", siglum: "ES", group: "ES", site: "Marignane" },    
+    
+    "AIRCRAFT TECHNICAL SERVICES": { name: "Virginie GRIMALDI", siglum: "ESA", group: "ES", site: "Marignane" },   
+    "STRATEGY & CULTURE & TRANSFO": { name: "Virginie GRIMALDI", siglum: "ESV", group: "ES", site: "Marignane" },   
+
+    "MILITARY SUPPORT CENTER France": { name: "Guillaume DOMINGUES", siglum: "ESF", group: "ES", site: "Marignane" },   
+    "SUPPORT & SERVICES AS & QUALITY": { name: "Guillaume DOMINGUES", siglum: "ESQ", group: "ES", site: "Marignane" },    
+
+    "MATERIAL SUPPORT & LOGISTICS": { name: "Laura TAUPIN", siglum: "ESL", group: "ES", site: "Marignane" },    
+    "BUSINESS & PROGRAMS": { name: "Laura TAUPIN", siglum: "ESX", group: "ES", site: "Marignane" },   
+
+    
+    
     "TECHDATA & SERVICE BULLETINS": { name: "Virginie GRIMALDI", siglum: "ESAD", group: "ES", site: "Marignane" },
     "AIRCRAFT MRO GERMANY": { name: "Virginie GRIMALDI", siglum: "ESAM", group: "ES", site: "Marignane" },
     "AIRCRAFT MAINTENANCE & DATA SERVICES": { name: "Laura GOMEZ", siglum: "ESAO", group: "ES", site: "Marignane" },
@@ -43,12 +54,12 @@ const hrbpMapping = {
     "FLEET MANAGEMENT & LEGACY FLEET": { name: "Guillaume DOMINGUES", siglum: "ESFD", group: "ES", site: "Marignane" },
     "NH90 FLEET MANAGEMENT": { name: "Guillaume DOMINGUES", siglum: "ESFN", group: "ES", site: "Marignane" },
     "TIGER FLEET MANAGEMENT": { name: "Guillaume DOMINGUES", siglum: "ESFT", group: "ES", site: "Marignane" },
-    "CUSTOMER MATERIAL MANAGEMENT": { name: "Nyveen NYAZI", siglum: "ESLC", group: "ES", site: "Marignane" },
-    "Operations & CSM for Saudia Arabia": { name: "Nyveen NYAZI", siglum: "ESLD", group: "ES", site: "Marignane" },
+    "CUSTOMER MATERIAL MANAGEMENT": { name: "Laura TAUPIN", siglum: "ESLC", group: "ES", site: "Marignane" },
+    "Operations & CSM for Saudia Arabia": { name: "Laura TAUPIN", siglum: "ESLD", group: "ES", site: "Marignane" },
     "GLOBAL FORECAST & SUPPLY EQ&AF&BU": { name: "Laura TAUPIN", siglum: "ESLE", group: "ES", site: "Marignane" },
-    "GLOBAL LOGISTICS": { name: "Nyveen NYAZI", siglum: "ESLL", group: "ES", site: "Marignane" },
-    "MAINTENANCE REPAIR & OVERHAUL": { name: "Nyveen NYAZI", siglum: "ESLT", group: "ES", site: "Marignane" },
-    "MS&L METHODS & TOOLS": { name: "Nyveen NYAZI", siglum: "ESLZ", group: "ES", site: "Marignane" },
+    "GLOBAL LOGISTICS": { name: "Laura TAUPIN", siglum: "ESLL", group: "ES", site: "Marignane" },
+    "MAINTENANCE REPAIR & OVERHAUL": { name: "Laura TAUPIN", siglum: "ESLT", group: "ES", site: "Marignane" },
+    "MS&L METHODS & TOOLS": { name: "Laura TAUPIN", siglum: "ESLZ", group: "ES", site: "Marignane" },
     "AIRCRAFT TECH SERVICES QUALITY WW": { name: "Guillaume DOMINGUES", siglum: "ESQA", group: "ES", site: "Marignane" },
     "AIRCREW PRODUCTS & ATO & FLIGHT OPS": { name: "Clémence THIEBAUT", siglum: "ESTA", group: "ES", site: "Marignane" },
     "WW STRATEGY&BUSINESS&BUSINESS PERFO": { name: "Clémence THIEBAUT", siglum: "ESTB", group: "ES", site: "Marignane" },
@@ -66,7 +77,6 @@ const hrbpMapping = {
     "PROGR SUPPORT LIGHT HELICOPTERS": { name: "Laura TAUPIN", siglum: "ESXL", group: "ES", site: "Marignane" },
     "PSO LEGACY PROGRAMS & TRANSVERSE": { name: "Laura TAUPIN", siglum: "ESXT", group: "ES", site: "Marignane" },
     "PSO MEDIUM & SUPER PUMA": { name: "Laura TAUPIN", siglum: "ESXY", group: "ES", site: "Marignane" },
-    
 
     // === MARIGNANE : CLUSTER ENGINEERING (ET) ===
     "GLOBAL ET": { name: "Violaine Faveris", siglum: "ET", group: "ET", site: "Marignane" },
@@ -83,28 +93,22 @@ const hrbpMapping = {
     "RESEARCH AND INNOVATION": { name: "Emmanuelle MARTELLI", siglum: "ETR", group: "ET", site: "Marignane" },
     "TESTING": { name: "Sarah LEVY", siglum: "ETX", group: "ET", site: "Marignane" },
     "LABORATORY MATERIALS & PROCESSES": { name: "Sabine DE-GRANCEY", siglum: "ETXL", group: "ET", site: "Marignane" },
-    "FLIGHT TEST FACILITIES": { name: "Sarah LEVY", siglum: "ETXM", group: "ET", site: "Marignane" },
     "MAINTAINABILITY": { name: "Sabine DE-GRANCEY", siglum: "ETXO", group: "ET", site: "Marignane" },
-    "TEST PILOTS AND SUBSIDIARIES": { name: "Sarah LEVY", siglum: "ETXP", group: "ET", site: "Marignane" },
-    "ENGINEERING TEST, SIMULATION & SERVICES": { name: "Sarah LEVY", siglum: "ETXS", group: "ET", site: "Marignane" },
-    "DEV FLIGHT & GROUND TESTS": { name: "Sarah LEVY", siglum: "ETXX", group: "ET", site: "Marignane" },
     "AVIONIC SYSTEMS": { name: "Pauline LENOUVEL", siglum: "ETY", group: "ET", site: "Marignane" },
-    
 
     // === MARIGNANE : CLUSTER CORPORATE ===
-    "GLOBAL CORPORATE FUNCTIONS": { name: "Morgane Raynaud", siglum: "EQ EB EF EI EG EX...", group: "Corporate", site: "Marignane" },
-    "GLOBAL BUSINESS": { name: "Marc Saladino", siglum: "EB", group: "Corporate", site: "Marignane" },
-    "FINANCE": { name: "Bettina Tabary", siglum: "EF & F", group: "Corporate", site: "Marignane" },
-    "DIGITAL & TRANSFORMATION": { name: "Caroline Cornut", siglum: "EI", group: "Corporate", site: "Marignane" },
-    "AVIATION SAFETY & QUALITY": { name: "Morgane Raynaud", siglum: "EG", group: "Corporate", site: "Marignane" },
-    "PROGRAMS": { name: "Mélissa Oger", siglum: "EX (sauf EXN)", group: "Corporate", site: "Marignane" },
-    "NH90 PROGRAM": { name: "Emily Gibbs", siglum: "EXN", group: "Corporate", site: "Marignane" },
-    "SUSTAINABILITY & COMMUNICATIONS": { name: "Thomas Astier", siglum: "G", group: "Corporate", site: "Marignane" },
-    "LEGAL, COMPLIANCE & PUBLIC AFFAIRS": { name: "Thomas Astier", siglum: "L", group: "Corporate", site: "Marignane" },
-    "CORPORATE SECRETARY": { name: "Bettina Tabary", siglum: "EK", group: "Corporate", site: "Marignane" },
-    "STRATEGY & SUSTAINABILITY": { name: "Thomas Astier", siglum: "EV", group: "Corporate", site: "Marignane" },
-    "HUMAN RESOURCES": { name: "Géraldine Weiss", siglum: "EH & H", group: "Corporate", site: "Marignane" },
-    
+    "GLOBAL CORPORATE FUNCTIONS": { name: "Morgane RAYNAUD", siglum: "EQ EB EF EI EG EX...", group: "Corporate", site: "Marignane" },
+    "GLOBAL BUSINESS": { name: "Anna BOUILLON", siglum: "EB", group: "Corporate", site: "Marignane" },
+    "FINANCE": { name: "Bettina TABARY", siglum: "EF & F", group: "Corporate", site: "Marignane" },
+    "DIGITAL & TRANSFORMATION": { name: "Caroline CORNUT", siglum: "EI", group: "Corporate", site: "Marignane" },
+    "AVIATION SAFETY & QUALITY": { name: "Morgane RAYNAUD", siglum: "EG", group: "Corporate", site: "Marignane" },
+    "PROGRAMS": { name: "Mélissa OGER", siglum: "EX (sauf EXN)", group: "Corporate", site: "Marignane" },
+    "NH90 PROGRAM": { name: "Emily GIBBS", siglum: "EXN", group: "Corporate", site: "Marignane" },
+    "SUSTAINABILITY & COMMUNICATIONS": { name: "Thomas ASTIER", siglum: "G", group: "Corporate", site: "Marignane" },
+    "LEGAL, COMPLIANCE & PUBLIC AFFAIRS": { name: "Thomas ASTIER", siglum: "L", group: "Corporate", site: "Marignane" },
+    "CORPORATE SECRETARY": { name: "Bettina TABARY", siglum: "EK", group: "Corporate", site: "Marignane" },
+    "STRATEGY & SUSTAINABILITY": { name: "Thomas ASTIER", siglum: "EV", group: "Corporate", site: "Marignane" },
+    "HUMAN RESOURCES": { name: "Géraldine WEISS", siglum: "EH & H", group: "Corporate", site: "Marignane" },
     
     // === SECTEURS PARIS-LE BOURGET (PLB) ===
     "INDUSTRIAL SITE PLB (Nathalie)": { name: "Nathalie OMARINI", siglum: "EDB", group: "ED", site: "PLB" },
