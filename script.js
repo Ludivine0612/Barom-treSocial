@@ -43,13 +43,14 @@ const hrbpMapping = {
 
     "MATERIAL SUPPORT & LOGISTICS": { name: "Laura TAUPIN", siglum: "ESL", group: "ES", site: "Marignane" },    
     "BUSINESS & PROGRAMS": { name: "Laura TAUPIN", siglum: "ESX", group: "ES", site: "Marignane" },   
+    "TRAINING": { name: "Clémence THIEBAUT", siglum: "EST", group: "ES", site: "Marignane" }, 
 
     
-    
-    "TECHDATA & SERVICE BULLETINS": { name: "Virginie GRIMALDI", siglum: "ESAD", group: "ES", site: "Marignane" },
-    "AIRCRAFT MRO GERMANY": { name: "Virginie GRIMALDI", siglum: "ESAM", group: "ES", site: "Marignane" },
-    "AIRCRAFT MAINTENANCE & DATA SERVICES": { name: "Laura GOMEZ", siglum: "ESAO", group: "ES", site: "Marignane" },
-    "TECHNICAL SUPPORT": { name: "Laura GOMEZ", siglum: "ESAT", group: "ES", site: "Marignane" },
+    "TRANSVERSAL SERVICES": { name: "Adeline BARUGOLA", siglum: "ESAC", group: "ES", site: "Marignane" },
+    "TECHDATA & SERVICE BULLETINS": { name: "Adeline BARUGOLA", siglum: "ESAD", group: "ES", site: "Marignane" },
+    "AIRCRAFT MRO GERMANY": { name: "Adeline BARUGOLA", siglum: "ESAM", group: "ES", site: "Marignane" },
+    "AIRCRAFT MAINTENANCE & DATA SERVICES": { name: "Virginie GRIMALDI", siglum: "ESAO", group: "ES", site: "Marignane" },
+    "TECHNICAL SUPPORT": { name: "Virginie GRIMALDI", siglum: "ESAT", group: "ES", site: "Marignane" },
     "AIRCRAFT MRO FRANCE": { name: "Guillaume DOMINGUES", siglum: "ESFA", group: "ES", site: "Marignane" },
     "FLEET MANAGEMENT & LEGACY FLEET": { name: "Guillaume DOMINGUES", siglum: "ESFD", group: "ES", site: "Marignane" },
     "NH90 FLEET MANAGEMENT": { name: "Guillaume DOMINGUES", siglum: "ESFN", group: "ES", site: "Marignane" },
@@ -93,7 +94,11 @@ const hrbpMapping = {
     "RESEARCH AND INNOVATION": { name: "Emmanuelle MARTELLI", siglum: "ETR", group: "ET", site: "Marignane" },
     "TESTING": { name: "Sarah LEVY", siglum: "ETX", group: "ET", site: "Marignane" },
     "LABORATORY MATERIALS & PROCESSES": { name: "Sabine DE-GRANCEY", siglum: "ETXL", group: "ET", site: "Marignane" },
+    "FLIGHT TEST FACILITIES": { name: "Sarah LEVY", siglum: "ETXM", group: "ET", site: "Marignane" },
     "MAINTAINABILITY": { name: "Sabine DE-GRANCEY", siglum: "ETXO", group: "ET", site: "Marignane" },
+    "TEST PILOTS AND SUBSIDIARIES": { name: "Sarah LEVY", siglum: "ETXP", group: "ET", site: "Marignane" },
+    "ENGINEERING TEST, SIMULATION & SERVICES": { name: "Sarah LEVY", siglum: "ETXS", group: "ET", site: "Marignane" },
+    "DEV FLIGHT & GROUND TESTS": { name: "Sarah LEVY", siglum: "ETXX", group: "ET", site: "Marignane" },
     "AVIONIC SYSTEMS": { name: "Pauline LENOUVEL", siglum: "ETY", group: "ET", site: "Marignane" },
 
     // === MARIGNANE : CLUSTER CORPORATE ===
